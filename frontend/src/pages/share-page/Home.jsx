@@ -1,6 +1,7 @@
 
 
 function Home() {
+  console.log("render home")
   return (
     <div>
       <h1>Home</h1>
