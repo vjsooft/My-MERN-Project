@@ -1,7 +1,7 @@
 
 console.log("Home module loaded");
 function Home() {
-  console.log("Home component rendered");
+  console.log("render home")
   return (
     <div>
       <h1>Home</h1>
