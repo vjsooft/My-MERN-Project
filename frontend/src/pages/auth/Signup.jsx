@@ -28,8 +28,8 @@ const handelSubmit = async (e) => {
   }
 
   try {
-    const data = await userRegister(fields);
-    console.log(data);
+   await userRegister(fields);
+    // console.log(data);
   } catch (error) {
     console.error(error.message);
   }
