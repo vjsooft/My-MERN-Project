@@ -31,6 +31,11 @@ const handelSubmit = async (e) => {
    await userRegister(fields);
     // console.log(data);
   } catch (error) {
+     console.error("Login Error:", error);
+  console.log("Message:", error.message);
+  console.log("Response:", error.response);
+  console.log("Status:", error.response?.status);
+  console.log("Data:", error.response?.data);
     console.error(error.message);
   }
 };
