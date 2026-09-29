@@ -4,11 +4,19 @@ const {loginUser, signupUser} = require('../services/userServices');
 const userLogin = async (req, res) => {
   try {
     const userLogin = await loginUser(req.body);
-    const {password, ...loginData} = userLogin.matchUser.toObject();
-    res.status(200).json({
+     userLogin.matchUser.toObject()
+    // const {password, ...loginData} =;
+     res.cookie("token", userLogin.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+    return  res.status(200).json({
       message: "User login successfully",
-      user:loginData,
-      token: userLogin.token
+      user: loginData,
+      // user:loginData,
+      // token: userLogin.token
     });
   } catch (err) {
     res.status(401).json({
@@ -19,7 +27,9 @@ const userLogin = async (req, res) => {
 };
 const userRegister = async (req, res) => {
   try {
+    console.log("CONTROLLER BODY ===========>", req, res);
     const user = await signupUser(req.body)
+    
     const {password, ...userData} = user.toObject();
     // const { name, email, mobNumber, password } = req.body;
     // const existingUser = await User.findOne({ email});

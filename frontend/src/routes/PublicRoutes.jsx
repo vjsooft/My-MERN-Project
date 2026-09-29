@@ -1,6 +1,6 @@
 import {Route} from "react-router-dom"
 import MainLayout from "../layouts/MainLayout";
-import{Home, About, Services, Contact, Login, Signup} from './routeConfig';
+import{Home, About, Services, Contact, Login, Signup, Profile} from './routeConfig';
 
 function PublicRoutes() {
   return (
@@ -9,6 +9,8 @@ function PublicRoutes() {
         <Route path="about" element={<About />} />
         <Route path="services" element={<Services />} />
         <Route path="contact" element={<Contact />} />
+         <Route path="contact" element={<Contact />} />
+         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />  
       </Route>

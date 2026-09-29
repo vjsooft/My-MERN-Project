@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import './Header.css'
 
 function Header() {
+ 
   return (
     <header className="site-header">
       <nav className="navbar navbar-expand-lg" aria-label="Main navigation">

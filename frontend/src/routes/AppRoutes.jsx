@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
 import PublicRoutes from "./PublicRoutes";
-import NotFound from "../pages/share-page/404-NotFound";
+import NotFound from "../components/common/404-NotFound";
 const AppRoutes = () => {
   return (
     <BrowserRouter>

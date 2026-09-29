@@ -1,7 +1,12 @@
+import { useState } from "react";
+import Loader from '../../components/common/Loader.jsx';
+import { useNavigate } from 'react-router-dom';
+import {showSuccess, showError} from '../../utils/toast.js'
 import {userRegister} from '../../services/authService.js'
-import { useState } from "react"
 
 function Signup() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [error, setErrors] = useState({});
   const [fields, setFields] = useState({
   name:"",
@@ -28,15 +33,22 @@ const handelSubmit = async (e) => {
   }
 
   try {
-   await userRegister(fields);
-    // console.log(data);
+    setLoading(true);
+    const response = await userRegister(fields);
+  
+    showSuccess(
+      response.message || "Registration successful"
+    );
+
+    navigate("/login");
   } catch (error) {
-     console.error("Login Error:", error);
-  console.log("Message:", error.message);
-  console.log("Response:", error.response);
-  console.log("Status:", error.response?.status);
-  console.log("Data:", error.response?.data);
-    console.error(error.message);
+    showError(
+      error.response?.data?.message ||
+      "Registration failed"
+    );
+
+  } finally {
+    setLoading(false);
   }
 };
 const formValidation = ()=>{
@@ -80,6 +92,7 @@ const formValidation = ()=>{
             <input type="password" name="password" id="password" className="form-control" value={fields.password} onChange={handelChange}/>
             {error.password && <p className="text-danger error">{error.password}</p>}
           </div>
+           {loading && <Loader />}
           <div className="col-sm-12 mb-3">
             <button className="btn btn-success" type="submit">Submmit</button>
           </div>
