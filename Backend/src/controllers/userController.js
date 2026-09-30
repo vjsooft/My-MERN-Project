@@ -2,10 +2,11 @@
 const {loginUser, signupUser} = require('../services/userServices');
 
 const userLogin = async (req, res) => {
+  console.log("CONTROLLER BODY ===========>", req);
   try {
     const userLogin = await loginUser(req.body);
-     userLogin.matchUser.toObject()
-    // const {password, ...loginData} =;
+    //  userLogin.matchUser.toObject()
+    const {password, ...loginData} = userLogin.matchUser.toObject()
      res.cookie("token", userLogin.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

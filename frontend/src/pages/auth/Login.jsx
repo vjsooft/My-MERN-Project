@@ -23,11 +23,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     console.log("Form Data:", data);
     try {
-      //
       const response = await userLogin(data);
-      localStorage.setItem("token", JSON.stringify(response.token));
+      console.log("Login Response:------>", response);
+      // localStorage.setItem("token", JSON.stringify(response.token));
       navigate("/profile");
-      console.log("Login Response:------>", response.token);
     } catch (error) {
       console.error("Login Error:", error);
     }
