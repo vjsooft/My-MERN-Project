@@ -9,6 +9,7 @@ app.use(
     credentials: true,
   })
 );
+
 const mainRoutes =  require('./routes/index')
 app.use(express.json());
 app.use(cookieParser());

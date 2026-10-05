@@ -2,25 +2,23 @@
 const {loginUser, signupUser} = require('../services/userServices');
 
 const userLogin = async (req, res) => {
-  console.log("CONTROLLER BODY ===========>", req);
   try {
     const userLogin = await loginUser(req.body);
-    //  userLogin.matchUser.toObject()
-    const {password, ...loginData} = userLogin.matchUser.toObject()
-     res.cookie("token", userLogin.token, {
+    const { password, ...loginData } =
+      userLogin.matchUser.toObject();
+
+    res.cookie("token", userLogin.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 1000, // 1 hour
+      maxAge: 60 * 60 * 1000,
     });
-    return  res.status(200).json({
+    return res.status(200).json({
       message: "User login successfully",
       user: loginData,
-      // user:loginData,
-      // token: userLogin.token
     });
   } catch (err) {
-    res.status(401).json({
+    return res.status(401).json({
       message: "User login failed",
       error: err.message,
     });
@@ -28,9 +26,7 @@ const userLogin = async (req, res) => {
 };
 const userRegister = async (req, res) => {
   try {
-    console.log("CONTROLLER BODY ===========>", req, res);
     const user = await signupUser(req.body)
-    
     const {password, ...userData} = user.toObject();
     // const { name, email, mobNumber, password } = req.body;
     // const existingUser = await User.findOne({ email});
@@ -51,4 +47,23 @@ const userRegister = async (req, res) => {
     });
   }
 };
-module.exports = { userLogin, userRegister };
+
+const userLogout = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax"
+    });
+    // res.clearCookie("token");
+    return res.status(200).json({
+      message: "User logout successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "User logout failed",
+      error: error.message,
+    });
+  }
+}
+module.exports = { userLogin, userRegister, userLogout };
