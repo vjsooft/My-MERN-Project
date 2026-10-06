@@ -5,9 +5,12 @@ import FormButton from "../../components/formFields/FormButton";
 import { loginSchema } from "../../schemas/auth/loginSchema";
 import { userLogin } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);  
   // 1. React Hook Form
   const methods = useForm({
     // 2. Zod ko React Hook Form se connect
@@ -24,8 +27,7 @@ const Login = () => {
     console.log("Form Data:", data);
     try {
       const response = await userLogin(data);
-      console.log("Login Response:------>", response);
-      // localStorage.setItem("token", JSON.stringify(response.token));
+      setUser(response.user);
       navigate("/profile");
     } catch (error) {
       console.error("Login Error:", error);

@@ -1,17 +1,20 @@
 import {createContext, useState, useEffect} from 'react'
 import {getProfile} from '../services/authService.js'
-export const AuthContext = createContext()
+
+const AuthContext = createContext()
 
 export const AuthProvider = ({children})=>{
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    console.log('AuthProvider rendered. Current user:', user, 'Loading state:', loading)
+    // console.log('user--------->', user)
+   
     useEffect(()=>{
         const checkAuth = async ()=>{
             try{
                 const profileData = await getProfile()
-                setUser(profileData)
+                // console.log('----------profileData--------->', profileData.userDetails)   
+                setUser(profileData.userDetails)
             }catch(error){
                 console.error('Error fetching profile:', error)
             }finally{
@@ -26,3 +29,4 @@ export const AuthProvider = ({children})=>{
         </AuthContext.Provider>
     )
 }
+export default AuthContext
